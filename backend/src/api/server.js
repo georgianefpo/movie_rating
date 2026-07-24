@@ -3,15 +3,22 @@
 // worker do navegador usando os dados de /train-data e /users/:id/candidates.
 import express from 'express';
 import cors from 'cors';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import { config as loadEnv } from 'dotenv';
 import { pool } from '../db/pool.js';
 import { ageLabel, occupationLabel } from './labels.js';
 
 loadEnv();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const FRONTEND_DIR = join(__dirname, '../../../frontend');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+// Serve o front (mesma origem que a API -> sem CORS no browser).
+app.use(express.static(FRONTEND_DIR));
 
 // pgvector volta como texto "[1,2,3]" — que ja e JSON valido.
 const parseVec = (s) => (s == null ? null : JSON.parse(s));

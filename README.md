@@ -32,7 +32,16 @@ cp .env.example .env      # ajuste DATABASE_URL e DATA_DIR
 npm install
 npm run db:setup          # cria o banco movie_rating + extension vector + tabelas
 npm run ingest            # carrega os .dat no Postgres (resumível)
+npm run encode            # gera os vetores (22 dims) no pgvector + índices HNSW
+npm start                 # sobe a API + serve o front em http://localhost:3001
 ```
+
+Abra <http://localhost:3001>, escolha um usuário, clique em **Treinar modelo** (o
+gráfico de perda/acurácia aparece ao vivo) e depois em **Recomendar**. Cada card
+mostra o score da **rede neural** (ordena) e a similaridade do **pgvector**.
+
+> Dica: o treino usa WebGL quando disponível (rápido); sem WebGL o TensorFlow.js
+> cai para CPU e demora mais — normal em navegadores sem aceleração gráfica.
 
 ### Postgres no WSL2 (Windows)
 
@@ -49,9 +58,10 @@ Dois comportamentos do WSL a lembrar:
 backend/
   src/db/       pool (keepAlive), schema.sql, setup.js
   src/ingest/   ingest.js (parseia os .dat, latin1, ON CONFLICT DO NOTHING)
-  src/encode/   (em breve) makeContext + encodeMovie/encodeUser -> vetores
-  src/api/      (em breve) Express: /users, /movies, /recommend
-frontend/       (em breve) exemplo01 adaptado (MVC + worker TF.js)
+  src/encode/   context.js + encode.js (makeContext + encodeMovie/encodeUser -> vetores)
+  src/api/      server.js (Express: /users, /movies, /recommend, /candidates, /train-data)
+frontend/       MVC (events + services + views + controllers) e worker TF.js
+  src/workers/  recommendationWorker.js (treino 65 features + reordenação híbrida)
 ```
 
 ## Créditos dos dados

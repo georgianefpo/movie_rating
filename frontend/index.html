@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movie_rating · recomendação de filmes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="brand">
+                <span class="brand-mark">▚</span>
+                <span class="brand-name">movie_rating</span>
+            </div>
+            <h1>Recomendação de filmes <span class="accent">híbrida</span></h1>
+            <p class="lede">
+                MovieLens 1M no <strong>PostgreSQL + pgvector</strong> recupera candidatos por
+                similaridade, e uma <strong>rede neural (TensorFlow.js)</strong> reordena
+                considerando também os seus dados pessoais.
+            </p>
+        </div>
+    </header>
+
+    <main class="grid">
+        <!-- Painel do usuário -->
+        <section class="panel">
+            <div class="panel-head">
+                <h2><span class="step">1</span> Usuário</h2>
+            </div>
+            <div class="panel-body">
+                <label class="field">
+                    <span>Selecione um usuário</span>
+                    <select id="userSelect" class="select">
+                        <option value="">— carregando… —</option>
+                    </select>
+                </label>
+
+                <div id="userProfile" class="profile hidden">
+                    <div id="profileMeta"></div>
+                    <h3 class="subhead">Filmes mais bem avaliados</h3>
+                    <ul id="ratedList" class="rated-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Painel de treino -->
+        <section class="panel">
+            <div class="panel-head">
+                <h2><span class="step">2</span> Treino da rede</h2>
+            </div>
+            <div class="panel-body">
+                <button id="trainBtn" class="btn btn-primary">⚙️ Treinar modelo</button>
+                <div class="progress"><div id="trainProgressFill" class="progress-fill"></div></div>
+                <p id="trainStatus" class="status">Clique para treinar a rede neural (65 features).</p>
+                <div id="trainChart" class="chart"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Recomendações -->
+    <section class="recs">
+        <div class="recs-head">
+            <button id="recommendBtn" class="btn btn-accent" disabled>🎬 Recomendar</button>
+            <h2 id="recTitle" class="hidden">Recomendados para você
+                <small>ordenado pela rede neural · barra secundária = similaridade do pgvector</small>
+            </h2>
+        </div>
+        <div id="recommendations" class="rec-grid">
+            <div class="empty">Escolha um usuário e treine o modelo para ver as recomendações.</div>
+        </div>
+    </section>
+
+    <footer class="foot">
+        Dados: <a href="https://grouplens.org/datasets/movielens/1m/" target="_blank" rel="noopener">MovieLens 1M</a>
+        · GroupLens / University of Minnesota
+    </footer>
+
+    <!-- tfjs-vis (global `tfvis`) para o gráfico de treino -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.5.1/dist/tfjs-vis.umd.min.js"></script>
+    <script type="module" src="./src/index.js"></script>
+</body>
+
+</html>
