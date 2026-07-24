@@ -1,0 +1,25 @@
+{
+    "name": "movie-rating-backend",
+    "version": "0.1.0",
+    "description": "Backend do sistema de recomendacao de filmes (MovieLens 1M) com PostgreSQL + pgvector",
+    "type": "module",
+    "main": "src/api/server.js",
+    "scripts": {
+        "db:setup": "node src/db/setup.js",
+        "ingest": "node src/ingest/ingest.js",
+        "start": "node src/api/server.js"
+    },
+    "keywords": [
+        "movielens",
+        "recommendation",
+        "pgvector",
+        "postgres",
+        "tensorflow"
+    ],
+    "author": "georgianefpo",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "pg": "^8.13.1"
+    }
+}

@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Env
+.env
+.env.local
+
+# Dados do MovieLens 1M — NAO redistribuir (licenca GroupLens).
+# Baixe/copie os .dat para ./data localmente antes de rodar a ingestao.
+data/
+*.dat
+
+# Logs
+*.log
+npm-debug.log*
+
+# Modelo treinado / artefatos
+*.model
+backend/tmp/
+
+# OS / Editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
